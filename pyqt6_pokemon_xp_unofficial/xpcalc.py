@@ -32,8 +32,11 @@ class MainWindow(QMainWindow):
         h2_font.setPointSize(26)
         results_label.setFont(h2_font)
 
-        # Align the lavel
+        # Align the label
         title_label.setAlignment(Qt.AlignmentFlag.AlignHCenter |
+                                 Qt.AlignmentFlag.AlignTop)
+        
+        results_label.setAlignment(Qt.AlignmentFlag.AlignHCenter |
                                  Qt.AlignmentFlag.AlignTop)
         
         # Add out left pane widgets
@@ -45,3 +48,14 @@ class MainWindow(QMainWindow):
         # Add the two panes to the layout
         main_layout.addLayout(left_pane)
         main_layout.addLayout(right_pane)
+
+        widget = QWidget()
+        widget.setLayout(main_layout)
+        self.setCentralWidget(widget)
+
+app = QApplication(sys.argv)
+
+window = MainWindow()
+window.show()
+
+app.exec()
