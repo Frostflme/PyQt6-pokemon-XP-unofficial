@@ -2,7 +2,7 @@ import sys
 
 import PyQt6.QtCore as QtCore
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import (QWidget, QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QSpinBox, QDoubleSpinBox)
+from PyQt6.QtWidgets import (QWidget, QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QSpinBox, QDoubleSpinBox, QCheckBox)
 
 class MainWindow(QMainWindow):
 
@@ -20,6 +20,22 @@ class MainWindow(QMainWindow):
 
         # Title label
         title_label = QLabel("Pokémon XP Calculator")
+
+        # Checkboxes
+        in_battle_checkbox = QCheckBox("Are they in the battle?")
+        evolution_checkbox = QCheckBox("Are they a higher level than it takes to evolve?")
+        lucky_egg_checkbox = QCheckBox("Are they holding a lucky egg?")
+
+        # Spinboxes
+        base_XP_spinbox = QSpinBox()
+        victorious_level_spinbox = QSpinBox()
+        defeated_level_spinbox = QSpinBox()
+        ally_number_spinbox = QSpinBox()
+        enemy_number_spinbox = QSpinBox()
+        xp_multiplier_spinbox = QDoubleSpinBox()
+
+        # Results button
+        button_results = QPushButton("Calculate results!")
 
         # Set the font
         h1_font = title_label.font()
