@@ -37,6 +37,14 @@ class MainWindow(QMainWindow):
         # Results button
         button_results = QPushButton("Calculate results!")
 
+        # Widget labels
+        base_XP_label = QLabel("How much base XP does the defeated Pokémon give?")
+        victorious_level_label = QLabel("What's the level of the Pokémon being given XP?")
+        defeated_level_label = QLabel("What's the level of the defeated Pokémon?")
+        ally_number_label = QLabel("How many Pokémon are on the team being given XP?")
+        enemy_number_label = QLabel("How many Pokémon are on the same team as the defeated Pokémon?")
+        xp_multiplier_label = QLabel("What are you multiplying the total XP by?")
+
         # Set the font
         h1_font = title_label.font()
         h1_font.setPointSize(30)
@@ -57,6 +65,22 @@ class MainWindow(QMainWindow):
         
         # Add out left pane widgets
         left_pane.addWidget(title_label)
+        left_pane.addWidget(xp_multiplier_label)
+        left_pane.addWidget(xp_multiplier_spinbox)
+        left_pane.addWidget(base_XP_label)
+        left_pane.addWidget(base_XP_spinbox)
+        left_pane.addWidget(victorious_level_label)
+        left_pane.addWidget(victorious_level_spinbox)
+        left_pane.addWidget(defeated_level_label)
+        left_pane.addWidget(defeated_level_spinbox)
+        left_pane.addWidget(ally_number_label)
+        left_pane.addWidget(ally_number_spinbox)
+        left_pane.addWidget(enemy_number_label)
+        left_pane.addWidget(enemy_number_spinbox)
+        left_pane.addWidget(in_battle_checkbox)
+        left_pane.addWidget(evolution_checkbox)
+        left_pane.addWidget(lucky_egg_checkbox)
+        left_pane.addWidget(button_results)
         
         # Add our right pane widgets
         right_pane.addWidget(results_label)
