@@ -23,16 +23,34 @@ class MainWindow(QMainWindow):
 
         # Checkboxes
         in_battle_checkbox = QCheckBox("Are they in the battle?")
+        in_battle_checkbox.setCheckState(Qt.CheckState.Checked)
         evolution_checkbox = QCheckBox("Are they a higher level than it takes to evolve?")
         lucky_egg_checkbox = QCheckBox("Are they holding a lucky egg?")
 
         # Spinboxes
         base_XP_spinbox = QSpinBox()
+        base_XP_spinbox.setMinimum(0)
+        base_XP_spinbox.setMaximum(1023)
+        base_XP_spinbox.setValue(70)
         victorious_level_spinbox = QSpinBox()
+        victorious_level_spinbox.setMinimum(1)
+        victorious_level_spinbox.setMaximum(100)
+        victorious_level_spinbox.setValue(50)
         defeated_level_spinbox = QSpinBox()
+        defeated_level_spinbox.setMinimum(1)
+        defeated_level_spinbox.setMaximum(100)
+        defeated_level_spinbox.setValue(50)
         ally_number_spinbox = QSpinBox()
+        ally_number_spinbox.setMinimum(1)
+        ally_number_spinbox.setMaximum(2147483647)
         enemy_number_spinbox = QSpinBox()
+        enemy_number_spinbox.setMinimum(1)
+        enemy_number_spinbox.setMaximum(2147483647)
         xp_multiplier_spinbox = QDoubleSpinBox()
+        xp_multiplier_spinbox.setMinimum(0)
+        xp_multiplier_spinbox.setMaximum(float(10**308))
+        xp_multiplier_spinbox.setSingleStep(0.05)
+        xp_multiplier_spinbox.setValue(1)
 
         # Results button
         button_results = QPushButton("Calculate results!")
