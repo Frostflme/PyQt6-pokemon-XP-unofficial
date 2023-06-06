@@ -181,16 +181,78 @@ class MainWindow(QMainWindow):
     def calculate_XP(self):
         """Calculate final XP"""
         # get variables
-        base_XP = self.base_XP_spinbox
+        base_XP = self.base_XP_spinbox.value()
+        victorious_level = self.victorious_level_spinbox.value()
+        defeated_level = self.defeated_level_spinbox.value()
+        ally_number = self.ally_number_spinbox.value()
+        enemy_number = self.enemy_number_spinbox.value()
+        xp_multiplier = self.xp_multiplier_spinbox.value()
+        in_battle = self.in_battle_checkbox.isChecked()
+        not_evolved_fully = self.evolution_checkbox.isChecked()
+        has_lucky_egg = self.lucky_egg_checkbox.isChecked()
 
         # find results
+        final_xp = base_XP * defeated_level
+        final_xp /= 5
+
+        if in_battle:
+            temp1 = 1
+        else:
+            temp1 = 2
+        final_xp *= (1/temp1)
+
+        temp1 = 2 * defeated_level
+        temp1 += 10
+        temp1 = temp1 ** 2.5
+        temp2 = defeated_level + victorious_level + 10
+        temp2 = temp2 ** 2.5
+        temp1 /= temp2
+        final_xp *= temp1
+        
+        final_xp += 1
+
+        if has_lucky_egg:
+            temp1 = 1.5
+        else:
+            temp1 = 1
+        if not_evolved_fully:
+            temp2 = 4915/4096
+        else:
+            temp2 = 1
+        final_xp *= temp1 * temp2
+        # TODO work get ally/enemy numbers worked out
+        final_xp *= xp_multiplier
 
         # display results
+        self.base_XP_results.setText(str(base_XP))
+        self.victorious_level_results.setText(str(victorious_level))
+        self.defeated_level_results.setText(str(defeated_level))
+        self.ally_number_results.setText(str(ally_number))
+        self.enemy_number_results.setText(str(enemy_number))
+        self.xp_multiplier_results.setText(str(xp_multiplier))
+        self.in_battle_results_checkbox_label.setText(str(in_battle))
+        self.evolution_results_checkbox_label.setText(str(not_evolved_fully))
+        self.lucky_egg_results_checkbox_label.setText(str(has_lucky_egg))
+        self.final_results.setText(str(final_xp))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
+#     app.setStyleSheet("""
+#     QWidget {
+#         background-color: "green";
+#         color: "white";
+#     }
+#     QPushButton {
+#         font-size: 16px;
+#         background-color: "darkgreen"
+#     }
+#     QLineEdit {
+#         background-color: "white";
+#         color: "black";
+#     }
+# """)
     app.exec()
 
     ### 20 minutes into the video ###
