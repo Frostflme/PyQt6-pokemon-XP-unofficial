@@ -47,7 +47,7 @@ def calculateXP(base_XP: int, victorious_level: int, defeated_level: int, ally_n
     # Adjusting for the XP multiplier
     final_xp *= xp_multiplier
 
-    return int(final_xp)
+    return int(round(final_xp))
 
 # global scope
 if __name__ == "__main__":

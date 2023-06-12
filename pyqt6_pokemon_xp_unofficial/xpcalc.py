@@ -121,6 +121,7 @@ class MainWindow(QMainWindow):
         evolution_results_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         lucky_egg_results_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         final_results_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.final_results.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.in_battle_results_checkbox_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.evolution_results_checkbox_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.lucky_egg_results_checkbox_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
@@ -194,6 +195,9 @@ class MainWindow(QMainWindow):
 
         # find results
         final_xp = controller.calculateXP(base_XP, victorious_level, defeated_level, ally_number, enemy_number, xp_multiplier, in_battle, not_evolved_fully, has_lucky_egg)
+
+        # remove the floating point error during the display of the XP multiplier
+        xp_multiplier = round(xp_multiplier, 2)
 
         # display results
         self.base_XP_results.setText(str(base_XP))
