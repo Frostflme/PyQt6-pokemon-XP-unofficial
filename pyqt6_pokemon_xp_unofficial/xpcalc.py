@@ -183,10 +183,10 @@ class MainWindow(QMainWindow):
     def calculate_XP(self):
         """Calculate final XP"""
         # get variables
-        input_dict = self.fetchInputtedVariables()
+        input_dict = self.fetch_inputted_variables()
         xp_multiplier = input_dict["XP multiplier"]
         # find results
-        final_xp = controller.calculateXP(input_dict["Base XP"], input_dict["Winner's level"], input_dict["Loser's level"], input_dict["Number of allies"], input_dict["Number of enemies"], xp_multiplier, input_dict["Is in battle?"], input_dict["Evolution possible?"], input_dict["Holding lucky egg?"])
+        final_xp = self.get_final_XP(input_dict["Base XP"], input_dict["Winner's level"], input_dict["Loser's level"], input_dict["Number of allies"], input_dict["Number of enemies"], xp_multiplier, input_dict["Is in battle?"], input_dict["Evolution possible?"], input_dict["Holding lucky egg?"])
 
         # remove the floating point error during the display of the XP multiplier
         xp_multiplier = round(xp_multiplier, 2)
@@ -203,7 +203,7 @@ class MainWindow(QMainWindow):
         self.lucky_egg_results_checkbox_label.setText(str(input_dict["Holding lucky egg?"]))
         self.final_results.setText(str(final_xp))
 
-    def fetchInputtedVariables(self) -> dict:
+    def fetch_inputted_variables(self) -> dict:
         """Grabs the current inputted variables"""
         input_dictionary = {
             "Base XP": self.base_XP_spinbox.value(),
