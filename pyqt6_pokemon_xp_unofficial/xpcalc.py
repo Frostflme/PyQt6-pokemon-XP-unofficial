@@ -5,6 +5,52 @@ import PyQt6.QtCore as QtCore
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtWidgets import (QWidget, QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QSpinBox, QDoubleSpinBox, QCheckBox)
 
+class AveragingWindow(QWidget):
+    def __init__(self) -> None:
+        super.__init__()
+
+        # Layouts
+        main_layout = QVBoxLayout()
+        main_pane = QHBoxLayout()
+        button_pane = QHBoxLayout()
+        continue_button_pane = QHBoxLayout()
+        different_section_button_pane = QHBoxLayout()
+        exit_button_pane = QHBoxLayout()
+
+        # Spinbox
+        self.level_spinbox = QSpinBox()
+        self.level_spinbox.setMinimum(1)
+        self.level_spinbox.setMinimum(100)
+        self.level_spinbox.setValue(50)
+
+        # Buttons
+        self.continue_button = QPushButton("Continue")
+        self.continue_button.clicked.connect(self.average_input_loop)
+        self.diff_section_button = QPushButton("I already know the average")
+        self.diff_section_button.clicked.connect(self.direct_input_menu)
+        self.exit_button = QPushButton("Exit")
+        self.exit_button.clicked.connect(self.exit_window)
+
+        # Variables
+        self.current_part = "Allies"
+        self.loop_number = 0
+        self.remaining = -1 # Placeholder value, it won't be that for the final.
+
+        # Labels
+        self.description_label = QLabel(f"Input the level of one of the {self.current_part} then hit continue to move on to the next part.")
+        self.spinbox_label = QLabel(f"Enter the level of {self.current_part} #{self.loop_number}")
+        self.status_label = QLabel(f"{self.remaning} left.")
+
+    
+    def exit_window(self):
+        pass
+
+    def direct_input_menu(self):
+        pass
+
+    def average_input_loop(self):
+        pass
+
 class MainWindow(QMainWindow):
 
     def __init__(self):
@@ -126,8 +172,6 @@ class MainWindow(QMainWindow):
         self.evolution_results_checkbox_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.lucky_egg_results_checkbox_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
-        # TODO: Center checkboxes 
-
         # Add out left pane widgets
         left_pane.addWidget(title_label)
         
@@ -180,7 +224,11 @@ class MainWindow(QMainWindow):
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
 
-    def calculate_XP(self):
+        # Add the secondary window as a variable
+        average_window = AveragingWindow()
+
+
+    def calculate_XP(self) -> None:
         """Calculate final XP"""
         # get variables
         input_dict = self.fetch_inputted_variables()
@@ -216,9 +264,59 @@ class MainWindow(QMainWindow):
             "Evolution possible?": self.evolution_checkbox.isChecked(),
             "Holding lucky egg?": self.lucky_egg_checkbox.isChecked()
             }
-        
 
         return input_dictionary
+    
+    def get_final_xp(base_XP: int, victorious_level: int, defeated_level: int, ally_number: int, enemy_number: int, xp_multiplier: float, in_battle: bool, not_evolved_fully: bool, has_lucky_egg: bool) -> int:
+        """Calculates the final XP using all the neccessary variables."""
+        # Calculation Part 1
+        final_xp = base_XP * defeated_level
+        final_xp /= 5
+
+        # Adjusting for being outside of battle
+        if in_battle:
+            temp1 = 1
+        else:
+            temp1 = 2
+        final_xp *= (1/temp1)
+
+        # Calculation Part 2
+        temp1 = 2 * defeated_level
+        temp1 += 10
+        temp1 = temp1 ** 2.5
+        temp2 = defeated_level + victorious_level + 10
+        temp2 = temp2 ** 2.5
+        temp1 /= temp2
+        final_xp *= temp1
+        
+        final_xp += 1
+
+        # Extra multipliers
+        if has_lucky_egg:
+            temp1 = 1.5
+        else:
+            temp1 = 1
+        if not_evolved_fully:
+            temp2 = 4915/4096
+        else:
+            temp2 = 1
+        final_xp *= temp1 * temp2
+        # Adjusting for the number of teammates and enemies
+        temp1 = enemy_number ** 1.5
+        temp2 = ally_number ** 0.5
+        temp1 *= temp2
+        temp2 = ally_number ** 2.5
+        temp1 /= temp2
+
+        final_xp *= temp1
+
+        # Adjusting for the XP multiplier
+        final_xp *= xp_multiplier
+
+        return int(round(final_xp))
+
+    def show_averaging_window(self):
+        self.average_window.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
