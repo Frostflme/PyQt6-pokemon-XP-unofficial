@@ -183,15 +183,8 @@ class MainWindow(QMainWindow):
     def calculate_XP(self):
         """Calculate final XP"""
         # get variables
-        base_XP = self.base_XP_spinbox.value()
-        victorious_level = self.victorious_level_spinbox.value()
-        defeated_level = self.defeated_level_spinbox.value()
-        ally_number = self.ally_number_spinbox.value()
-        enemy_number = self.enemy_number_spinbox.value()
-        xp_multiplier = self.xp_multiplier_spinbox.value()
-        in_battle = self.in_battle_checkbox.isChecked()
-        not_evolved_fully = self.evolution_checkbox.isChecked()
-        has_lucky_egg = self.lucky_egg_checkbox.isChecked()
+        dictionary = fetchInputtedVariables()
+        
 
         # find results
         final_xp = controller.calculateXP(base_XP, victorious_level, defeated_level, ally_number, enemy_number, xp_multiplier, in_battle, not_evolved_fully, has_lucky_egg)
@@ -210,6 +203,23 @@ class MainWindow(QMainWindow):
         self.evolution_results_checkbox_label.setText(str(not_evolved_fully))
         self.lucky_egg_results_checkbox_label.setText(str(has_lucky_egg))
         self.final_results.setText(str(final_xp))
+
+    def fetchInputtedVariables(self) -> dict:
+        """Grabs the current inputted variables"""
+        input_dictionary = {
+            "Base XP": self.base_XP_spinbox.value(),
+            "Winner's level": self.victorious_level_spinbox.value(),
+            "Loser's level": self.defeated_level_spinbox.value(),
+            "Number of allies": self.ally_number_spinbox.value(),
+            "Number of enemies": self.enemy_number_spinbox.value(),
+            "XP multiplier": self.xp_multiplier_spinbox.value(),
+            "Is in battle?": self.in_battle_checkbox.isChecked(),
+            "Evolution possible?": self.evolution_checkbox.isChecked(),
+            "Holding lucky egg?": self.lucky_egg_checkbox.isChecked()
+            }
+        
+
+        return input_dictionary
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
