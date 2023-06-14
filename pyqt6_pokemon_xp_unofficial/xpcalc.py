@@ -10,18 +10,32 @@ class AveragingWindow(QWidget):
         super.__init__()
 
         # Layouts
-        main_layout = QVBoxLayout()
-        main_pane = QHBoxLayout()
-        button_pane = QHBoxLayout()
+        loop_layout = QVBoxLayout()
+        final_iter_layout = QVBoxLayout()
+        average_layout = QVBoxLayout()
+
+        main_pane_loop = QVBoxLayout()
+        main_pane_final = QVBoxLayout()
+        main_pane_average = QVBoxLayout()
+
+        button_pane_full = QHBoxLayout()
+        button_pane_only_exit = QHBoxLayout()
+        button_pane_no_average = QHBoxLayout()
+
         continue_button_pane = QHBoxLayout()
         different_section_button_pane = QHBoxLayout()
         exit_button_pane = QHBoxLayout()
 
-        # Spinbox
+        # Spinbox and DoubleSpinbox
         self.level_spinbox = QSpinBox()
         self.level_spinbox.setMinimum(1)
         self.level_spinbox.setMinimum(100)
         self.level_spinbox.setValue(50)
+
+        self.average_double_spinbox = QDoubleSpinBox()
+        self.average_double_spinbox.setMinimum(1)
+        self.average_double_spinbox.setMaximum(100)
+        self.average_double_spinbox.setValue(50.0)
 
         # Buttons
         self.continue_button = QPushButton("Continue")
@@ -33,13 +47,64 @@ class AveragingWindow(QWidget):
 
         # Variables
         self.current_part = "Allies"
-        self.loop_number = 0
+        self.loop_number = 1
         self.remaining = -1 # Placeholder value, it won't be that for the final.
 
         # Labels
-        self.description_label = QLabel(f"Input the level of one of the {self.current_part} then hit continue to move on to the next part.")
+        self.description_label = QLabel(f"Input the level of one of the {self.current_part} then hit continue to move on.")
+        self.description_average_label = QLabel(f"Input the average level of the {self.current_part}.")
         self.spinbox_label = QLabel(f"Enter the level of {self.current_part} #{self.loop_number}")
         self.status_label = QLabel(f"{self.remaning} left.")
+        self.status_label_final = QLabel("This is the final one.")
+
+        # Align the labels
+        self.description_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.spinbox_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.status_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.status_label_final.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+
+        # Add buttons to the correct pane
+        exit_button_pane.addWidget(self.exit_button)
+        different_section_button_pane.addWidget(self.diff_section_button)
+        continue_button_pane.addWidget(self.continue_button)
+
+        # Add widgets to main loop
+        main_pane_loop.addWidget(self.description_label)
+        main_pane_loop.addWidget(self.spinbox_label)
+        main_pane_loop.addWidget(self.level_spinbox)
+        main_pane_loop.addWidget(self.status_label)
+
+        # Add widgets to main final
+        main_pane_final.addWidget(self.description_label)
+        main_pane_final.addWidget(self.spinbox_label)
+        main_pane_final.addWidget(self.level_spinbox)
+        main_pane_final.addWidget(self.status_label_final)
+
+        # Add widgets to main average
+        main_pane_average.addWidget(self.description_average_label)
+        main_pane_average.addWidget(self.average_double_spinbox)
+
+        # Add layouts to button full
+        button_pane_full.addLayout(continue_button_pane)
+        button_pane_full.addLayout(different_section_button_pane)
+        button_pane_full.addLayout(exit_button_pane)
+
+        # Add layouts to button w/o average
+        button_pane_no_average.addLayout(continue_button_pane)
+        button_pane_no_average.addLayout(exit_button_pane)
+
+        # Add layouts to button only exit
+        button_pane_only_exit.addLayout(exit_button_pane)
+
+        # Finalize three main layouts
+        loop_layout.addLayout(main_pane_loop)
+        loop_layout.addLayout(button_pane_full)
+        
+        final_iter_layout.addLayout(main_pane_final)
+        final_iter_layout.addLayout(button_pane_full)
+
+        average_layout.addLayout(main_pane_average)
+        average_layout.addLayout(button_pane_no_average)
 
     
     def exit_window(self):
@@ -112,7 +177,7 @@ class MainWindow(QMainWindow):
         xp_multiplier_label = QLabel("What are you multiplying the total XP by?")
 
         # Results labels
-        base_XP_results_label = QLabel("Base XP")
+        base_XP_results_lazbel = QLabel("Base XP")
         self.base_XP_results = QLabel("N/A")
         victorious_level_results_label = QLabel("Level (Self)")
         self.victorious_level_results = QLabel("N/A")
