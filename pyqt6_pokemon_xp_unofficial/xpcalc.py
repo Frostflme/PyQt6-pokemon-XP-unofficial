@@ -183,25 +183,24 @@ class MainWindow(QMainWindow):
     def calculate_XP(self):
         """Calculate final XP"""
         # get variables
-        dictionary = fetchInputtedVariables()
-        
-
+        input_dict = self.fetchInputtedVariables()
+        xp_multiplier = input_dict["XP multiplier"]
         # find results
-        final_xp = controller.calculateXP(base_XP, victorious_level, defeated_level, ally_number, enemy_number, xp_multiplier, in_battle, not_evolved_fully, has_lucky_egg)
+        final_xp = controller.calculateXP(input_dict["Base XP"], input_dict["Winner's level"], input_dict["Loser's level"], input_dict["Number of allies"], input_dict["Number of enemies"], xp_multiplier, input_dict["Is in battle?"], input_dict["Evolution possible?"], input_dict["Holding lucky egg?"])
 
         # remove the floating point error during the display of the XP multiplier
         xp_multiplier = round(xp_multiplier, 2)
 
         # display results
-        self.base_XP_results.setText(str(base_XP))
-        self.victorious_level_results.setText(str(victorious_level))
-        self.defeated_level_results.setText(str(defeated_level))
-        self.ally_number_results.setText(str(ally_number))
-        self.enemy_number_results.setText(str(enemy_number))
+        self.base_XP_results.setText(str(input_dict["Base XP"]))
+        self.victorious_level_results.setText(str(input_dict["Winner's level"]))
+        self.defeated_level_results.setText(str(input_dict["Loser's level"]))
+        self.ally_number_results.setText(str(input_dict["Number of allies"]))
+        self.enemy_number_results.setText(str(input_dict["Number of enemies"]))
         self.xp_multiplier_results.setText(str(xp_multiplier))
-        self.in_battle_results_checkbox_label.setText(str(in_battle))
-        self.evolution_results_checkbox_label.setText(str(not_evolved_fully))
-        self.lucky_egg_results_checkbox_label.setText(str(has_lucky_egg))
+        self.in_battle_results_checkbox_label.setText(str(input_dict["Is in battle?"]))
+        self.evolution_results_checkbox_label.setText(str(input_dict["Evolution possible?"]))
+        self.lucky_egg_results_checkbox_label.setText(str(input_dict["Holding lucky egg?"]))
         self.final_results.setText(str(final_xp))
 
     def fetchInputtedVariables(self) -> dict:
