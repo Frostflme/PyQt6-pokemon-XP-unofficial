@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import (QWidget, QApplication, QMainWindow, QLabel, QPushBu
 
 class AveragingWindow(QWidget):
     def __init__(self) -> None:
-        super.__init__()
+        super().__init__()
 
         # Layouts
         loop_layout = QVBoxLayout()
@@ -54,7 +54,7 @@ class AveragingWindow(QWidget):
         self.description_label = QLabel(f"Input the level of one of the {self.current_part} then hit continue to move on.")
         self.description_average_label = QLabel(f"Input the average level of the {self.current_part}.")
         self.spinbox_label = QLabel(f"Enter the level of {self.current_part} #{self.loop_number}")
-        self.status_label = QLabel(f"{self.remaning} left.")
+        self.status_label = QLabel(f"{self.remaining} left.")
         self.status_label_final = QLabel("This is the final one.")
 
         # Align the labels
@@ -177,7 +177,7 @@ class MainWindow(QMainWindow):
         xp_multiplier_label = QLabel("What are you multiplying the total XP by?")
 
         # Results labels
-        base_XP_results_lazbel = QLabel("Base XP")
+        base_XP_results_label = QLabel("Base XP")
         self.base_XP_results = QLabel("N/A")
         victorious_level_results_label = QLabel("Level (Self)")
         self.victorious_level_results = QLabel("N/A")
@@ -332,7 +332,7 @@ class MainWindow(QMainWindow):
 
         return input_dictionary
     
-    def get_final_xp(base_XP: int, victorious_level: int, defeated_level: int, ally_number: int, enemy_number: int, xp_multiplier: float, in_battle: bool, not_evolved_fully: bool, has_lucky_egg: bool) -> int:
+    def get_final_XP(self, base_XP: int, victorious_level: int, defeated_level: int, ally_number: int, enemy_number: int, xp_multiplier: float, in_battle: bool, not_evolved_fully: bool, has_lucky_egg: bool) -> int:
         """Calculates the final XP using all the neccessary variables."""
         # Calculation Part 1
         final_xp = base_XP * defeated_level
