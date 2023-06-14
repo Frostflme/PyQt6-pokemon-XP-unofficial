@@ -114,7 +114,8 @@ class AveragingWindow(QWidget):
         pass
 
     def average_input_loop(self):
-        pass
+        while self.remaining > 0:
+            pass
 
 class MainWindow(QMainWindow):
 
